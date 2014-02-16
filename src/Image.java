@@ -24,6 +24,20 @@ public class Image {
 		generateImage();
 	}
 
+	/*
+	public Image(int width, int height, int numRectangles, BigInteger binary) {
+		this.width = width;
+		this.height = height;
+		rectangles = new Rectangle[numRectangles];
+		for (int i = 0; i < numRectangles; i++) {
+			BigInteger rectangleBinary = binary.and(BigInteger.valueOf(0xFFFFFF));
+			
+		}
+		image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		generateImage();
+	}
+	*/
+
 	private void generateImage() {
 		Graphics g = image.getGraphics();
 		g.setColor(Color.BLACK);
@@ -57,13 +71,12 @@ public class Image {
 	public BufferedImage getImage() {
 		return image;
 	}
-	
+
 	public BigInteger getBinary() {
 		BigInteger binary = BigInteger.ZERO;
-		for(Rectangle rectangle : rectangles){
-			binary.shiftLeft(32*5);
-			System.out.println(rectangle.getBinary());
-			binary.or(rectangle.getBinary());
+		for (Rectangle rectangle : rectangles) {
+			binary = binary.shiftLeft(32 * 5);
+			binary = binary.or(rectangle.getBinary());
 		}
 		return binary;
 	}
@@ -88,7 +101,8 @@ public class Image {
 			int r = binary.and(BigInteger.valueOf(0xFF)).intValue();
 			binary = binary.shiftRight(8);
 			int a = binary.and(BigInteger.valueOf(0xFF)).intValue();
-			
+			binary = binary.shiftRight(8);
+
 			int height = binary.and(BigInteger.valueOf(0xFFFF)).intValue();
 			binary = binary.shiftRight(32);
 			int width = binary.and(BigInteger.valueOf(0xFFFF)).intValue();
@@ -96,20 +110,12 @@ public class Image {
 			int y = binary.and(BigInteger.valueOf(0xFFFF)).intValue();
 			binary = binary.shiftRight(32);
 			int x = binary.and(BigInteger.valueOf(0xFFFF)).intValue();
-			
+
 			this.x = x;
 			this.y = y;
 			this.width = width;
 			this.height = height;
 			this.color = new Color(a, r, g, b);
-		}
-
-		private Color argbToColor(int argb) {
-			int a = (argb >> 24) & 0xFF;
-			int r = (argb >> 16) & 0xFF;
-			int g = (argb >> 8) & 0xFF;
-			int b = argb & 0xFF;
-			return new Color(r, g, b, a);
 		}
 
 		public int getX() {
@@ -159,7 +165,7 @@ public class Image {
 			binary = binary.or(BigInteger.valueOf(g));
 			binary = binary.shiftLeft(8);
 			binary = binary.or(BigInteger.valueOf(b));
-			
+
 			return binary;
 		}
 	}
