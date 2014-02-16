@@ -13,14 +13,6 @@ public class Image {
 
 	BufferedImage image;
 	
-	public static void main(String[] args) {
-		Image image = new Image(500, 500, 20);
-		Rectangle rect = image.new Rectangle(50, 50, 200, 300, new Color(200, 100, 50, 150));
-		Rectangle newRect = image.new Rectangle(rect.getBinary());
-		System.out.println(newRect.getColor().getRed() + "\t" + newRect.getColor().getGreen() + "\t" + newRect.getColor().getBlue() + "\t" + newRect.getColor().getAlpha());
-		
-	}
-
 	public Image(int width, int height, int numRectangles) {
 		this.width = width;
 		this.height = height;
