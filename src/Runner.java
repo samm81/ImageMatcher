@@ -1,15 +1,12 @@
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-
-import javax.imageio.ImageIO;
-
+import java.math.BigInteger;
 
 public class Runner {
 
 	static int numRectangles = 32;
 	
 	public static void main(String args[]) throws InterruptedException, IOException{
+		/*
 		BufferedImage pic = ImageIO.read(new File("pic.jpg"));
 		int width = pic.getWidth();
 		int height = pic.getHeight();
@@ -26,49 +23,47 @@ public class Runner {
 		
 		System.out.println(scorer.score(pic));
 		System.out.println(scorer.score(img));
-
-		/*
-		FaceMakerFrame fmf = new FaceMakerFrame(width, height);
-		FaceMakerFrame fmf2 = new FaceMakerFrame(width, height);
-		FaceMaker gene1 = new FaceMaker(fmf, POLYGONS, SIDES);
-		FaceMaker gene2 = new FaceMaker(gene1);
-
-		int counter = 0;
-		int lc = 0;
-		while(true){
-			counter++;
-			
-			BufferedImage gene1Img = gene1.makeFace();
-			gene2.mutate();
-			BufferedImage gene2Img = gene2.makeFace();
-			
-			long score1 = breeder.getScore(gene1Img);
-			long score2 = breeder.getScore(gene2Img);
-			
-			//gene2.printSelf();
-			System.out.println(counter+"\t"+gene2.leeway+"\t"+score1+"\t("+score2+")");
-			
-			if(score2 < score1){
-				gene1 = new FaceMaker(gene2);
-				gene2.resetLeeway();
-				lc = 0;
-			}else{
-				gene2 = new FaceMaker(gene1);
-				lc++;
-			}
-			
-			if(lc == 10 * gene2.leeway){
-				gene2.increaseLeeway();
-				lc = 0;
-			}
-			
-			
-			fmf.updateFrame(gene1Img);
-			fmf.repaint();
-			fmf2.updateFrame(gene2Img);
-			fmf2.repaint();
-		}
+		System.out.println();
 		*/
+		
+		System.out.println(Long.MAX_VALUE + "\n");
+		
+		int x = 312;
+		int y = 456;
+		int w = 346;
+		int h = 134;
+		int rgb = (20 << 24) | (123 << 16) | (45 << 8) | (202);
+		
+		System.out.println(rgb + "\n");
+		
+		BigInteger binary = BigInteger.ZERO;
+		binary = binary.shiftLeft(32);
+		binary = binary.or(BigInteger.valueOf(x));
+		System.out.println(binary);
+		binary = binary.shiftLeft(32);
+		binary = binary.or(BigInteger.valueOf(y));
+		System.out.println(binary);
+		binary = binary.shiftLeft(32);
+		binary = binary.or(BigInteger.valueOf(w));
+		System.out.println(binary);
+		binary = binary.shiftLeft(32);
+		binary = binary.or(BigInteger.valueOf(h));
+		System.out.println(binary);
+		binary = binary.shiftLeft(32);
+		binary = binary.or(BigInteger.valueOf(rgb));
+		System.out.println(binary + "\n");
+		
+		System.out.println(binary.and(BigInteger.valueOf(0x7FFFFFFF)));
+		binary = binary.shiftRight(32);
+		System.out.println(binary.and(BigInteger.valueOf(0xFFFF)));
+		binary = binary.shiftRight(32);
+		System.out.println(binary.and(BigInteger.valueOf(0xFFFF)));
+		binary = binary.shiftRight(32);
+		System.out.println(binary.and(BigInteger.valueOf(0xFFFF)));
+		binary = binary.shiftRight(32);
+		System.out.println(binary.and(BigInteger.valueOf(0xFFFF)));
+		binary = binary.shiftRight(32);
+		
 	}
 	
 }

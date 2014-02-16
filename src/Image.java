@@ -56,7 +56,7 @@ public class Image {
 		return image;
 	}
 
-	private class Rectangle {
+	public class Rectangle {
 		private int x, y, width, height;
 		private Color color;
 
@@ -66,6 +66,13 @@ public class Image {
 			this.width = width;
 			this.height = height;
 			this.color = color;
+		}
+		
+		public Rectangle(long binary){
+			int rgb = (int) (binary & 0xFFFFFFFF);
+			binary = binary >> 32;
+			int height = (int) (binary & 0xFF);
+			binary = binary >> 8;
 		}
 
 		public int getX() {
@@ -86,6 +93,21 @@ public class Image {
 
 		public Color getColor() {
 			return color;
+		}
+		
+		public long getBinary() {
+			long binary = 0;
+			binary = binary << 8;
+			binary += x;
+			binary = binary << 8;
+			binary += y;
+			binary = binary << 8;
+			binary += width;
+			binary = binary << 8;
+			binary += height;
+			binary = binary << 32;
+			binary += color.getRGB();
+			return binary;
 		}
 	}
 }
