@@ -1,8 +1,9 @@
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+
 import javax.imageio.ImageIO;
 
 
@@ -16,12 +17,24 @@ public class Runner {
 		int width = pic.getWidth();
 		int height = pic.getHeight();
 
-		ImageBreeder breeder = new ImageBreeder(pic);
+		BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+		Graphics g = img.getGraphics();
+		g.setColor(Color.GREEN);
+		g.fillRect(0, 0, width, height);
+		
+		FaceMakerFrame f = new FaceMakerFrame(width, height);
+		f.updateFrame(img);
+		
+		Scorer scorer = new Scorer(img);
+		
+		System.out.println(scorer.score(pic));
+		System.out.println(scorer.score(img));
 
+		/*
 		FaceMakerFrame fmf = new FaceMakerFrame(width, height);
 		FaceMakerFrame fmf2 = new FaceMakerFrame(width, height);
 		FaceMaker gene1 = new FaceMaker(fmf, POLYGONS, SIDES);
-		FaceMaker gene2 = new FaceMaker(gene1);		
+		FaceMaker gene2 = new FaceMaker(gene1);
 
 		int counter = 0;
 		int lc = 0;
@@ -58,6 +71,7 @@ public class Runner {
 			fmf2.updateFrame(gene2Img);
 			fmf2.repaint();
 		}
+		*/
 	}
 	
 }
