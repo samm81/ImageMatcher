@@ -11,7 +11,13 @@ public class Display extends JFrame {
 
 	public Display(int width, int height) {
 		displayNum++;
-		setBounds(20 + (displayNum * (width + 30)), 100, width, height);
+		int displayX = 20 + (displayNum * (width + 30));
+		int displayY = 50;
+		while (displayX > 1600) { //TODO: change 1600 to auto
+			displayX -= 1600;
+			displayY += height + 30;
+		}
+		setBounds(displayX, displayY, width, height);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
 	}
