@@ -1,6 +1,7 @@
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.math.BigInteger;
 
 import javax.imageio.ImageIO;
 
@@ -28,7 +29,7 @@ public class Runner {
 		System.out.println();
 		
 		System.out.println(image.getBinary());
-		
+
 	}
 	
 }

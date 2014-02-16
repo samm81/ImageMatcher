@@ -81,10 +81,14 @@ public class Image {
 		}
 
 		public Rectangle(BigInteger binary) {
-			// hex value discovered by trial and error, I don't know why it
-			// works
-			int argb = binary.and(BigInteger.valueOf(0x7FFFFFFF)).intValue();
-			binary = binary.shiftRight(32);
+			int b = binary.and(BigInteger.valueOf(0xFF)).intValue();
+			binary = binary.shiftRight(8);
+			int g = binary.and(BigInteger.valueOf(0xFF)).intValue();
+			binary = binary.shiftRight(8);
+			int r = binary.and(BigInteger.valueOf(0xFF)).intValue();
+			binary = binary.shiftRight(8);
+			int a = binary.and(BigInteger.valueOf(0xFF)).intValue();
+			
 			int height = binary.and(BigInteger.valueOf(0xFFFF)).intValue();
 			binary = binary.shiftRight(32);
 			int width = binary.and(BigInteger.valueOf(0xFFFF)).intValue();
@@ -92,12 +96,12 @@ public class Image {
 			int y = binary.and(BigInteger.valueOf(0xFFFF)).intValue();
 			binary = binary.shiftRight(32);
 			int x = binary.and(BigInteger.valueOf(0xFFFF)).intValue();
-
+			
 			this.x = x;
 			this.y = y;
 			this.width = width;
 			this.height = height;
-			this.color = argbToColor(argb);
+			this.color = new Color(a, r, g, b);
 		}
 
 		private Color argbToColor(int argb) {
@@ -143,9 +147,19 @@ public class Image {
 			binary = binary.shiftLeft(32);
 			binary = binary.or(BigInteger.valueOf(height));
 
-			binary = binary.shiftLeft(32);
-			binary = binary.or(BigInteger.valueOf(color.getRGB()));
-
+			int a = color.getAlpha();
+			int r = color.getRed();
+			int g = color.getGreen();
+			int b = color.getBlue();
+			binary = binary.shiftLeft(8);
+			binary = binary.or(BigInteger.valueOf(a));
+			binary = binary.shiftLeft(8);
+			binary = binary.or(BigInteger.valueOf(r));
+			binary = binary.shiftLeft(8);
+			binary = binary.or(BigInteger.valueOf(g));
+			binary = binary.shiftLeft(8);
+			binary = binary.or(BigInteger.valueOf(b));
+			
 			return binary;
 		}
 	}
