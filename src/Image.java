@@ -12,6 +12,14 @@ public class Image {
 	Rectangle[] rectangles;
 
 	BufferedImage image;
+	
+	public static void main(String[] args) {
+		Image image = new Image(500, 500, 20);
+		Rectangle rect = image.new Rectangle(50, 50, 200, 300, new Color(200, 100, 50, 150));
+		Rectangle newRect = image.new Rectangle(rect.getBinary());
+		System.out.println(newRect.getColor().getRed() + "\t" + newRect.getColor().getGreen() + "\t" + newRect.getColor().getBlue() + "\t" + newRect.getColor().getAlpha());
+		
+	}
 
 	public Image(int width, int height, int numRectangles) {
 		this.width = width;
@@ -24,19 +32,19 @@ public class Image {
 		generateImage();
 	}
 
-	/*
 	public Image(int width, int height, int numRectangles, BigInteger binary) {
 		this.width = width;
 		this.height = height;
 		rectangles = new Rectangle[numRectangles];
-		for (int i = 0; i < numRectangles; i++) {
-			BigInteger rectangleBinary = binary.and(BigInteger.valueOf(0xFFFFFF));
-			
+		for (int i = numRectangles - 1; i >= 0; i--) {
+			BigInteger mask = BigInteger.valueOf(2).pow(Rectangle.binaryLength).subtract(BigInteger.valueOf(1));
+			BigInteger rectangleBinary = binary.and(mask);
+			binary = binary.shiftRight(Rectangle.binaryLength);
+			rectangles[i] = new Rectangle(rectangleBinary);
 		}
 		image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		generateImage();
 	}
-	*/
 
 	private void generateImage() {
 		Graphics g = image.getGraphics();
@@ -75,15 +83,17 @@ public class Image {
 	public BigInteger getBinary() {
 		BigInteger binary = BigInteger.ZERO;
 		for (Rectangle rectangle : rectangles) {
-			binary = binary.shiftLeft(32 * 5);
+			binary = binary.shiftLeft(Rectangle.binaryLength);
 			binary = binary.or(rectangle.getBinary());
 		}
 		return binary;
 	}
 
-	private class Rectangle {
+	public class Rectangle {
 		private int x, y, width, height;
 		private Color color;
+		
+		public static final int binaryLength = 32*5;
 
 		public Rectangle(int x, int y, int width, int height, Color color) {
 			this.x = x;
@@ -115,7 +125,7 @@ public class Image {
 			this.y = y;
 			this.width = width;
 			this.height = height;
-			this.color = new Color(a, r, g, b);
+			this.color = new Color(r, g, b, a);
 		}
 
 		public int getX() {
