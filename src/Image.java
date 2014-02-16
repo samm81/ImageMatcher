@@ -57,8 +57,18 @@ public class Image {
 	public BufferedImage getImage() {
 		return image;
 	}
+	
+	public BigInteger getBinary() {
+		BigInteger binary = BigInteger.ZERO;
+		for(Rectangle rectangle : rectangles){
+			binary.shiftLeft(32*5);
+			System.out.println(rectangle.getBinary());
+			binary.or(rectangle.getBinary());
+		}
+		return binary;
+	}
 
-	public class Rectangle {
+	private class Rectangle {
 		private int x, y, width, height;
 		private Color color;
 
