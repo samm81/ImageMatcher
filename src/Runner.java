@@ -1,5 +1,3 @@
-import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -9,18 +7,15 @@ import javax.imageio.ImageIO;
 
 public class Runner {
 
-	private final static int POLYGONS = 32;
-	private final static int SIDES = 3;
+	static int numRectangles = 32;
 	
 	public static void main(String args[]) throws InterruptedException, IOException{
 		BufferedImage pic = ImageIO.read(new File("pic.jpg"));
 		int width = pic.getWidth();
 		int height = pic.getHeight();
 
-		BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-		Graphics g = img.getGraphics();
-		g.setColor(Color.GREEN);
-		g.fillRect(0, 0, width, height);
+		Image image = new Image(width, height, numRectangles);
+		BufferedImage img = image.getImage();
 		
 		Display f = new Display(width, height);
 		f.updateImage(img);
