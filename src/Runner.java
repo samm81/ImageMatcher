@@ -22,8 +22,10 @@ public class Runner {
 		g.setColor(Color.GREEN);
 		g.fillRect(0, 0, width, height);
 		
-		FaceMakerFrame f = new FaceMakerFrame(width, height);
-		f.updateFrame(img);
+		Display f = new Display(width, height);
+		f.updateImage(img);
+		Display f2 = new Display(width, height);
+		f2.updateImage(pic);
 		
 		Scorer scorer = new Scorer(img);
 		

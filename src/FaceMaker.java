@@ -16,7 +16,7 @@ public class FaceMaker {
 	private int height;
 	public static int leeway = 3;
 
-	public FaceMaker(FaceMakerFrame fmf, int numShapes, int numSides){
+	public FaceMaker(Display fmf, int numShapes, int numSides){
 		this.numShapes = numShapes;
 		this.numSides = numSides;
 		width = fmf.getWidth();
