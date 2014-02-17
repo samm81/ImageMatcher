@@ -6,15 +6,6 @@ public class Rectangle {
 
 	public static final int binaryLength = 8*8;
 
-	public static void main(String[] args) {
-		Rectangle one = new Rectangle(50, 60, 70, 80, new Color(90, 100, 110, 120));
-		BigInteger binary = one.getBinary();
-		Rectangle two = new Rectangle(binary);
-		System.out.println(two.getX() + " " + two.getY() + " " + two.getWidth() + " " + two.getHeight());
-		System.out.println(two.r + " " + two.g + " " + two.b + " " + two.a);
-		System.out.println(two.getColor().getRed() + " " + two.getColor().getGreen() + " " + two.getColor().getBlue() + " " + two.getColor().getAlpha());
-	}
-
 	public Rectangle(int x, int y, int width, int height, Color color) {
 		this.x = (byte) x;
 		this.y = (byte) y;
@@ -46,23 +37,23 @@ public class Rectangle {
 	}
 
 	public int getX() {
-		return x;
+		return x & 0xFF;
 	}
 
 	public int getY() {
-		return y;
+		return y & 0xFF;
 	}
 
 	public int getWidth() {
-		return width;
+		return width & 0xFF;
 	}
 
 	public int getHeight() {
-		return height;
+		return height & 0xFF;
 	}
 
 	public Color getColor() {
-		return new Color(r, g, b, a);
+		return new Color(r & 0xFF, g & 0xFF, b & 0xFF, a & 0xFF);
 	}
 
 	public BigInteger getBinary() {
@@ -94,4 +85,15 @@ public class Rectangle {
 
 		return binary;
 	}
+	
+	// for testing
+	public static void main(String[] args) {
+		Rectangle one = new Rectangle(50, 60, 70, 80, new Color(90, 100, 110, 120));
+		BigInteger binary = one.getBinary();
+		Rectangle two = new Rectangle(binary);
+		System.out.println(two.getX() + " " + two.getY() + " " + two.getWidth() + " " + two.getHeight());
+		System.out.println(two.r + " " + two.g + " " + two.b + " " + two.a);
+		System.out.println(two.getColor().getRed() + " " + two.getColor().getGreen() + " " + two.getColor().getBlue() + " " + two.getColor().getAlpha());
+	}
+	
 }

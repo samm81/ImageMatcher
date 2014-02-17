@@ -80,5 +80,17 @@ public class Image {
 		}
 		return binary;
 	}
+	
+	// for testing
+	public static void main(String[] args) {
+		Display d1 = new Display(200, 200);
+		Display d2 = new Display(200, 200);
+		
+		Image image1 = new Image(200, 200, 20);
+		d1.updateImage(image1.getBufferedImage());
+		
+		Image image2 = new Image(200, 200, 20, image1.getBinary());
+		d2.updateImage(image2.getBufferedImage());
+	}
 
 }
