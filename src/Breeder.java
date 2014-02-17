@@ -10,7 +10,7 @@ public class Breeder {
 	}
 	
 	public BigInteger breed(BigInteger parent1, BigInteger parent2) {
-		int bitLength = parent1.bitLength();
+		int bitLength = parent1.bitCount();
 		
 		int splitPoint = r.nextInt(bitLength);
 		
