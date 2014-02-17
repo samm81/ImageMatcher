@@ -11,7 +11,7 @@ public class Image {
 
 	Rectangle[] rectangles;
 
-	BufferedImage image;
+	BufferedImage bufferedImage;
 	
 	public Image(int width, int height, int numRectangles) {
 		this.width = width;
@@ -20,7 +20,7 @@ public class Image {
 		for (int i = 0; i < numRectangles; i++) {
 			rectangles[i] = generateRandomRectangle();
 		}
-		image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		generateImage();
 	}
 
@@ -34,12 +34,12 @@ public class Image {
 			binary = binary.shiftRight(Rectangle.binaryLength);
 			rectangles[i] = new Rectangle(rectangleBinary);
 		}
-		image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		generateImage();
 	}
 
 	private void generateImage() {
-		Graphics g = image.getGraphics();
+		Graphics g = bufferedImage.getGraphics();
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, this.width, this.height);
 		for (Rectangle rectangle : rectangles) {
@@ -68,8 +68,8 @@ public class Image {
 		return rectangles;
 	}
 
-	public BufferedImage getImage() {
-		return image;
+	public BufferedImage getBufferedImage() {
+		return bufferedImage;
 	}
 
 	public BigInteger getBinary() {
