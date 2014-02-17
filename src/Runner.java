@@ -32,6 +32,7 @@ public class Runner {
 		}
 
 		Breeder breeder = new Breeder();
+		
 		while(true){
 			System.out.println("looping");
 			int i = 0;
