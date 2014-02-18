@@ -1,6 +1,8 @@
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Map.Entry;
+import java.util.Random;
 import java.util.TreeMap;
 
 import javax.imageio.ImageIO;
@@ -8,7 +10,7 @@ import javax.imageio.ImageIO;
 public class Runner {
 
 	static int numRectangles = 32;
-	static int numGenes = 5;
+	static int numGenes = 10;
 
 	public static void main(String args[]) throws InterruptedException, IOException{
 		BufferedImage pic = ImageIO.read(new File("pic2.jpg"));
@@ -41,22 +43,58 @@ public class Runner {
 				i++;
 			}
 
+			//System.out.println(scoredImages);
+			
 			Image president = scoredImages.firstEntry().getValue();
 			Image vicePres = scoredImages.tailMap(scoredImages.firstKey(), false).firstEntry().getValue();
+			
+			Random r = new Random();
+			int index1 = r.nextInt(numGenes - 4) + 2;
+			int index2 = r.nextInt(numGenes - 4) + 2;
+			while(index2 == index1)
+				index2 = r.nextInt(numGenes - 4) + 2;
+			
+			Image rand1 = (Image) ((Entry)(scoredImages.entrySet().toArray()[index1])).getValue();
+			Image rand2 = (Image) ((Entry)(scoredImages.entrySet().toArray()[index2])).getValue();
+			//System.out.println(president);
+			//System.out.println(vicePres);
 			
 			long trash = scoredImages.headMap(scoredImages.lastKey(), false).lastKey();
 			long scum = scoredImages.lastKey();
 			
+			//System.out.println(trash);
+			//System.out.println(scum);
+			
 			scoredImages.remove(trash);
 			scoredImages.remove(scum);
 			
+			//System.out.println(scoredImages);
+			
 			Image child1 = new Image(width, height, numRectangles, breeder.breed(president.getBinary(), vicePres.getBinary()));
-			Image child2 = new Image(width, height, numRectangles, breeder.breed(vicePres.getBinary(), president.getBinary()));
+			Image child2 = new Image(width, height, numRectangles, breeder.breed(rand1.getBinary(), rand2.getBinary()));
+
+			//System.out.println(child1);
+			//System.out.println(child2);
 			
-			scoredImages.put(scorer.score(child1.getBufferedImage()), child1);
-			scoredImages.put(scorer.score(child2.getBufferedImage()), child2);
+			long child1Score = scorer.score(child1.getBufferedImage());
+			long child2Score = scorer.score(child2.getBufferedImage());
 			
-			Thread.sleep(6000);
+			while(scoredImages.containsKey(child1Score)){
+				child1Score += 1;
+			}
+			scoredImages.put(child1Score, child1);
+			
+			while(scoredImages.containsKey(child2Score)){
+				child2Score += 1;
+			}
+			scoredImages.put(child2Score, child2);
+			
+			//System.out.println(scoredImages);
+			
+			//System.out.println();
+			//System.out.println();
+			
+			Thread.sleep(200);
 			
 		}
 
