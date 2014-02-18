@@ -37,7 +37,7 @@ public class Runner {
 		
 		int iteration = 0;
 		while(true){
-			System.out.println("Iteration: " + iteration);
+			System.out.println("Iteration: " + iteration + "\tBest Score: " + scoredImages.firstKey());
 			
 			int i = 0;
 			for(Image image : scoredImages.values()){
@@ -56,8 +56,10 @@ public class Runner {
 			while(index2 == index1)
 				index2 = r.nextInt(numGenes - 4) + 2;
 			
-			Image rand1 = (Image) ((Entry)(scoredImages.entrySet().toArray()[index1])).getValue();
-			Image rand2 = (Image) ((Entry)(scoredImages.entrySet().toArray()[index2])).getValue();
+			@SuppressWarnings("unchecked")
+			Image rand1 = (Image) ((Entry<Long, Image>)(scoredImages.entrySet().toArray()[index1])).getValue();
+			@SuppressWarnings("unchecked")
+			Image rand2 = (Image) ((Entry<Long, Image>)(scoredImages.entrySet().toArray()[index2])).getValue();
 			//System.out.println(president);
 			//System.out.println(vicePres);
 			
@@ -91,7 +93,8 @@ public class Runner {
 			
 			int mutateIndex = r.nextInt(numGenes);
 			long mutateeKey = (long) scoredImages.keySet().toArray()[mutateIndex];
-			Image mutatee = (Image) ((Entry)(scoredImages.entrySet().toArray()[mutateIndex])).getValue();
+			@SuppressWarnings("unchecked")
+			Image mutatee = (Image) ((Entry<Long, Image>)(scoredImages.entrySet().toArray()[mutateIndex])).getValue();
 			
 			scoredImages.remove(mutateeKey);
 			
