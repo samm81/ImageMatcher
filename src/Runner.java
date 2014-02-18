@@ -35,8 +35,10 @@ public class Runner {
 
 		Breeder breeder = new Breeder();
 		
+		int iteration = 0;
 		while(true){
-			System.out.println("looping");
+			System.out.println("Iteration: " + iteration);
+			
 			int i = 0;
 			for(Image image : scoredImages.values()){
 				displays[i].updateImage(image.getBufferedImage());
@@ -79,23 +81,32 @@ public class Runner {
 			long child1Score = scorer.score(child1.getBufferedImage());
 			long child2Score = scorer.score(child2.getBufferedImage());
 			
-			while(scoredImages.containsKey(child1Score)){
-				child1Score += 1;
-			}
+			while(scoredImages.containsKey(child1Score))
+				child1Score++;
 			scoredImages.put(child1Score, child1);
 			
-			while(scoredImages.containsKey(child2Score)){
-				child2Score += 1;
-			}
+			while(scoredImages.containsKey(child2Score))
+				child2Score++;
 			scoredImages.put(child2Score, child2);
+			
+			int mutateIndex = r.nextInt(numGenes);
+			long mutateeKey = (long) scoredImages.keySet().toArray()[mutateIndex];
+			Image mutatee = (Image) ((Entry)(scoredImages.entrySet().toArray()[mutateIndex])).getValue();
+			
+			scoredImages.remove(mutateeKey);
+			
+			mutatee = new Image(width, height, numRectangles, breeder.mutate(mutatee.getBinary()));
+			long mutateeScore = scorer.score(mutatee.getBufferedImage());
+			while(scoredImages.containsKey(mutateeScore))
+				mutateeScore++;
+			
+			scoredImages.put(mutateeScore, mutatee);
 			
 			//System.out.println(scoredImages);
 			
 			//System.out.println();
 			//System.out.println();
-			
-			Thread.sleep(200);
-			
+			iteration++;
 		}
 
 	}

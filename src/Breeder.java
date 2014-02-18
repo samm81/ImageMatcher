@@ -21,4 +21,14 @@ public class Breeder {
 		return parent1.or(parent2);
 	}
 	
+	public BigInteger mutate(BigInteger gene){
+		int bitLength = gene.bitCount();
+		
+		int flipPoint = r.nextInt(bitLength);
+		
+		BigInteger mask = BigInteger.valueOf(1).shiftLeft(flipPoint);
+		
+		return gene.xor(mask);
+	}
+	
 }
