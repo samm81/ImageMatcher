@@ -8,7 +8,7 @@ import javax.imageio.ImageIO;
 public class Runner {
 
 	static int numRectangles = 32;
-	static int numGenes = 10;
+	static int numGenes = 5;
 
 	public static void main(String args[]) throws InterruptedException, IOException{
 		BufferedImage pic = ImageIO.read(new File("pic2.jpg"));
@@ -55,6 +55,8 @@ public class Runner {
 			
 			scoredImages.put(scorer.score(child1.getBufferedImage()), child1);
 			scoredImages.put(scorer.score(child2.getBufferedImage()), child2);
+			
+			Thread.sleep(6000);
 			
 		}
 

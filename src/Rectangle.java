@@ -86,14 +86,27 @@ public class Rectangle {
 		return binary;
 	}
 	
+	public void printSelf() {
+		System.out.print("x: " + x + ", ");
+		System.out.print("y: " + y + ", ");
+		System.out.print("width: " + width + ", ");
+		System.out.print("height: " + height);
+		System.out.println();
+		System.out.print("a: " + a + ", ");
+		System.out.print("r: " + r + ", ");
+		System.out.print("g: " + g + ", ");
+		System.out.print("b: " + b);
+		System.out.println();
+	}
+	
 	// for testing
 	public static void main(String[] args) {
 		Rectangle one = new Rectangle(50, 60, 70, 80, new Color(90, 100, 110, 120));
 		BigInteger binary = one.getBinary();
 		Rectangle two = new Rectangle(binary);
-		System.out.println(two.getX() + " " + two.getY() + " " + two.getWidth() + " " + two.getHeight());
-		System.out.println(two.r + " " + two.g + " " + two.b + " " + two.a);
-		System.out.println(two.getColor().getRed() + " " + two.getColor().getGreen() + " " + two.getColor().getBlue() + " " + two.getColor().getAlpha());
+		one.printSelf();
+		System.out.println();
+		two.printSelf();
 	}
 	
 }

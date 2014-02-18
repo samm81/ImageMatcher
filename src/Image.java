@@ -81,6 +81,14 @@ public class Image {
 		return binary;
 	}
 	
+	public void printSelf() {
+		System.out.println("width: " + width + ", height: " + height);
+		for(int i=0;i<rectangles.length;i++){
+			System.out.println("rectangle " + i);
+			rectangles[i].printSelf();
+		}
+	}
+	
 	// for testing
 	public static void main(String[] args) {
 		Display d1 = new Display(200, 200);
@@ -91,6 +99,10 @@ public class Image {
 		
 		Image image2 = new Image(200, 200, 20, image1.getBinary());
 		d2.updateImage(image2.getBufferedImage());
+		
+		image1.printSelf();
+		System.out.println();
+		image2.printSelf();
 	}
 
 }
