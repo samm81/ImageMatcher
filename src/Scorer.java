@@ -30,7 +30,8 @@ public class Scorer {
 				colors[1] = (rgb >> 8) & 0x00FF;
 				colors[2] = rgb & 0xFF;
 				for(int i=0;i<3;i++){
-					score += Math.pow(rgbs[row][col][i] - colors[i], 2);
+					//score += Math.pow(rgbs[row][col][i] - colors[i], 2);
+					score += Math.abs(rgbs[row][col][i] - colors[i]);
 				}
 			}
 		}
