@@ -2,15 +2,15 @@ import java.awt.Color;
 import java.math.BigInteger;
 
 public class Rectangle {
-	private byte x, y, width, height, a, r, g, b;
+	private byte x, y, xbar, ybar, a, r, g, b;
 
 	public static final int binaryLength = 8*8;
 
-	public Rectangle(int x, int y, int width, int height, Color color) {
+	public Rectangle(int x, int y, int xbar, int ybar, Color color) {
 		this.x = (byte) x;
 		this.y = (byte) y;
-		this.width = (byte) width;
-		this.height = (byte) height;
+		this.xbar = (byte) xbar;
+		this.ybar = (byte) ybar;
 		this.a = (byte) color.getAlpha();
 		this.r = (byte) color.getRed();
 		this.g = (byte)	color.getGreen();
@@ -27,9 +27,9 @@ public class Rectangle {
 		this.a = binary.and(BigInteger.valueOf(0xFF)).byteValue();
 		binary = binary.shiftRight(8);
 
-		this.height = binary.and(BigInteger.valueOf(0xFF)).byteValue();
+		this.ybar = binary.and(BigInteger.valueOf(0xFF)).byteValue();
 		binary = binary.shiftRight(8);
-		this.width = binary.and(BigInteger.valueOf(0xFF)).byteValue();
+		this.xbar = binary.and(BigInteger.valueOf(0xFF)).byteValue();
 		binary = binary.shiftRight(8);
 		this.y = binary.and(BigInteger.valueOf(0xFF)).byteValue();
 		binary = binary.shiftRight(8);
@@ -44,12 +44,12 @@ public class Rectangle {
 		return y & 0xFF;
 	}
 
-	public int getWidth() {
-		return width & 0xFF;
+	public int getXbar() {
+		return xbar & 0xFF;
 	}
 
-	public int getHeight() {
-		return height & 0xFF;
+	public int getYbar() {
+		return ybar & 0xFF;
 	}
 
 	public Color getColor() {
@@ -66,10 +66,10 @@ public class Rectangle {
 		binary = binary.or(BigInteger.valueOf(y & 0xFF));
 
 		binary = binary.shiftLeft(8);
-		binary = binary.or(BigInteger.valueOf(width & 0xFF));
+		binary = binary.or(BigInteger.valueOf(xbar & 0xFF));
 
 		binary = binary.shiftLeft(8);
-		binary = binary.or(BigInteger.valueOf(height & 0xFF));
+		binary = binary.or(BigInteger.valueOf(ybar & 0xFF));
 
 		binary = binary.shiftLeft(8);
 		binary = binary.or(BigInteger.valueOf(a & 0xFF));
@@ -87,15 +87,15 @@ public class Rectangle {
 	}
 	
 	public void printSelf() {
-		System.out.print("x: " + x + ", ");
-		System.out.print("y: " + y + ", ");
-		System.out.print("width: " + width + ", ");
-		System.out.print("height: " + height);
+		System.out.print("x: " + getX() + ", ");
+		System.out.print("y: " + getY() + ", ");
+		System.out.print("xbar: " + getXbar() + ", ");
+		System.out.print("ybar: " + getYbar());
 		System.out.println();
-		System.out.print("a: " + a + ", ");
-		System.out.print("r: " + r + ", ");
-		System.out.print("g: " + g + ", ");
-		System.out.print("b: " + b);
+		System.out.print("a: " + getColor().getAlpha() + ", ");
+		System.out.print("r: " + getColor().getRed() + ", ");
+		System.out.print("g: " + getColor().getGreen() + ", ");
+		System.out.print("b: " + getColor().getBlue());
 		System.out.println();
 	}
 	

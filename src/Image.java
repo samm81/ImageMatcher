@@ -12,7 +12,7 @@ public class Image {
 	Rectangle[] rectangles;
 
 	BufferedImage bufferedImage;
-	
+
 	public Image(int width, int height, int numRectangles) {
 		this.width = width;
 		this.height = height;
@@ -20,7 +20,8 @@ public class Image {
 		for (int i = 0; i < numRectangles; i++) {
 			rectangles[i] = generateRandomRectangle();
 		}
-		bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		bufferedImage = new BufferedImage(width, height,
+				BufferedImage.TYPE_INT_ARGB);
 		generateImage();
 	}
 
@@ -29,12 +30,14 @@ public class Image {
 		this.height = height;
 		rectangles = new Rectangle[numRectangles];
 		for (int i = numRectangles - 1; i >= 0; i--) {
-			BigInteger mask = BigInteger.valueOf(2).pow(Rectangle.binaryLength).subtract(BigInteger.valueOf(1));
+			BigInteger mask = BigInteger.valueOf(2).pow(Rectangle.binaryLength)
+					.subtract(BigInteger.valueOf(1));
 			BigInteger rectangleBinary = binary.and(mask);
 			binary = binary.shiftRight(Rectangle.binaryLength);
 			rectangles[i] = new Rectangle(rectangleBinary);
 		}
-		bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		bufferedImage = new BufferedImage(width, height,
+				BufferedImage.TYPE_INT_ARGB);
 		generateImage();
 	}
 
@@ -44,24 +47,35 @@ public class Image {
 		g.fillRect(0, 0, this.width, this.height);
 		for (Rectangle rectangle : rectangles) {
 			g.setColor(rectangle.getColor());
-			g.fillRect(rectangle.getX(), rectangle.getY(),
-					rectangle.getWidth(), rectangle.getHeight());
+			int x = rectangle.getX();
+			int y = rectangle.getY();
+			int xbar = rectangle.getXbar();
+			int ybar = rectangle.getYbar();
+			if(x > xbar){
+				int temp = x;
+				x = xbar;
+				xbar = temp;
+			}
+			if(y > ybar){
+				int temp = y;
+				y = ybar;
+				ybar = temp;
+			}
+			int width = xbar - x;
+			int height = ybar - y;
+			g.fillRect(x, y, width, height);
 		}
 	}
 
 	private Rectangle generateRandomRectangle() {
 		Random r = new Random();
-		int x = r.nextInt(width);
-		int y = r.nextInt(height);
-		int width = r.nextInt(this.width - x);
-		int height = r.nextInt(this.height - y);
-		Color color = generateRandomColor(r);
-		return new Rectangle(x, y, width, height, color);
-	}
-
-	private Color generateRandomColor(Random r) {
-		return new Color(r.nextFloat(), r.nextFloat(), r.nextFloat(),
+		int x = r.nextInt(this.width);
+		int y = r.nextInt(this.height);
+		int xbar = r.nextInt(this.width);
+		int ybar = r.nextInt(this.height);
+		Color color = new Color(r.nextFloat(), r.nextFloat(), r.nextFloat(),
 				r.nextFloat());
+		return new Rectangle(x, y, xbar, ybar, color);
 	}
 
 	public Rectangle[] getRectangles() {
@@ -80,26 +94,26 @@ public class Image {
 		}
 		return binary;
 	}
-	
+
 	public void printSelf() {
 		System.out.println("width: " + width + ", height: " + height);
-		for(int i=0;i<rectangles.length;i++){
+		for (int i = 0; i < rectangles.length; i++) {
 			System.out.println("rectangle " + i);
 			rectangles[i].printSelf();
 		}
 	}
-	
+
 	// for testing
 	public static void main(String[] args) {
 		Display d1 = new Display(200, 200);
 		Display d2 = new Display(200, 200);
-		
+
 		Image image1 = new Image(200, 200, 20);
 		d1.updateImage(image1.getBufferedImage());
-		
+
 		Image image2 = new Image(200, 200, 20, image1.getBinary());
 		d2.updateImage(image2.getBufferedImage());
-		
+
 		image1.printSelf();
 		System.out.println();
 		image2.printSelf();

@@ -23,6 +23,7 @@ public class Display extends JFrame {
 		setVisible(true);
 	}
 
+	//TODO: move this to a canvas
 	public void updateImage(BufferedImage image) {
 		this.image = image;
 		repaint();
