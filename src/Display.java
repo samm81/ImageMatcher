@@ -19,7 +19,7 @@ public class Display extends JFrame {
 		}
 		setBounds(displayX, displayY, width, height);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setAlwaysOnTop(true);
+		setAlwaysOnTop(false);
 		setVisible(true);
 	}
 

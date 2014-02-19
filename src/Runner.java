@@ -47,14 +47,14 @@ public class Runner {
 
 			//System.out.println(scoredImages);
 			
-			Image president = scoredImages.firstEntry().getValue();
-			Image vicePres = scoredImages.tailMap(scoredImages.firstKey(), false).firstEntry().getValue();
+			//Image president = scoredImages.firstEntry().getValue();
+			//Image vicePres = scoredImages.tailMap(scoredImages.firstKey(), false).firstEntry().getValue();
 			
 			Random r = new Random();
-			int index1 = r.nextInt(numGenes - 4) + 2;
-			int index2 = r.nextInt(numGenes - 4) + 2;
+			int index1 = r.nextInt(numGenes - 2);
+			int index2 = r.nextInt(numGenes - 2);
 			while(index2 == index1)
-				index2 = r.nextInt(numGenes - 4) + 2;
+				index2 = r.nextInt(numGenes - 2);
 			
 			@SuppressWarnings("unchecked")
 			Image rand1 = (Image) ((Entry<Long, Image>)(scoredImages.entrySet().toArray()[index1])).getValue();
@@ -74,8 +74,8 @@ public class Runner {
 			
 			//System.out.println(scoredImages);
 			
-			Image child1 = new Image(width, height, numRectangles, breeder.breed(president.getBinary(), vicePres.getBinary()));
-			Image child2 = new Image(width, height, numRectangles, breeder.breed(rand1.getBinary(), rand2.getBinary()));
+			Image child1 = new Image(width, height, numRectangles, breeder.breed(rand1.getBinary(), rand2.getBinary()));
+			Image child2 = new Image(width, height, numRectangles, breeder.breed(rand2.getBinary(), rand1.getBinary()));
 
 			//System.out.println(child1);
 			//System.out.println(child2);
