@@ -1,4 +1,5 @@
 import java.awt.Graphics;
+import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
@@ -14,8 +15,11 @@ public class Display extends JFrame {
 		displayNum++;
 		int displayX = 30 + (displayNum * (width + 65));
 		int displayY = 5;
-		while (displayX + width > 1600) { //TODO: change 1600 to auto
-			displayX -= 1600;
+		
+		int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+		
+		while (displayX + width > screenWidth) {
+			displayX -= screenWidth;
 			displayY += height + 45;
 		}
 		setLocation(displayX, displayY);

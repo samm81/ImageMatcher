@@ -12,6 +12,8 @@ public class Image {
 	Rectangle[] rectangles;
 
 	BufferedImage bufferedImage;
+	
+	Color backgroundColor = Color.WHITE;
 
 	public Image(int width, int height, int numRectangles) {
 		this.width = width;
@@ -43,27 +45,10 @@ public class Image {
 
 	private void generateImage() {
 		Graphics g = bufferedImage.getGraphics();
-		g.setColor(Color.BLACK);
+		g.setColor(backgroundColor);
 		g.fillRect(0, 0, this.width, this.height);
 		for (Rectangle rectangle : rectangles) {
-			g.setColor(rectangle.getColor());
-			int x = rectangle.getX();
-			int y = rectangle.getY();
-			int xbar = rectangle.getXbar();
-			int ybar = rectangle.getYbar();
-			if(x > xbar){
-				int temp = x;
-				x = xbar;
-				xbar = temp;
-			}
-			if(y > ybar){
-				int temp = y;
-				y = ybar;
-				ybar = temp;
-			}
-			int width = xbar - x;
-			int height = ybar - y;
-			g.fillRect(x, y, width, height);
+			rectangle.drawSelf(g);
 		}
 	}
 

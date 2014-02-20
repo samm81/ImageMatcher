@@ -10,10 +10,10 @@ import javax.imageio.ImageIO;
 public class Runner {
 
 	static int numRectangles = 32;
-	static int numGenes = 10;
+	static int numGenes = 5;
 
 	public static void main(String args[]) throws InterruptedException, IOException{
-		BufferedImage pic = ImageIO.read(new File("pic2.jpg"));
+		BufferedImage pic = ImageIO.read(new File("chrome.png"));
 		int width = pic.getWidth();
 		int height = pic.getHeight();
 		Display f = new Display(width, height);
@@ -89,6 +89,8 @@ public class Runner {
 			
 			while(scoredImages.containsKey(child2Score))
 				child2Score++;
+			
+			
 			scoredImages.put(child2Score, child2);
 			
 			int mutateIndex = r.nextInt(numGenes);

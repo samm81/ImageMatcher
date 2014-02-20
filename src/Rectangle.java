@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.Graphics;
 import java.math.BigInteger;
 
 public class Rectangle {
@@ -84,6 +85,27 @@ public class Rectangle {
 		binary = binary.or(BigInteger.valueOf(b & 0xFF));
 
 		return binary;
+	}
+	
+	public void drawSelf(Graphics g) {
+		g.setColor(getColor());
+		int x = getX();
+		int y = getY();
+		int xbar = getXbar();
+		int ybar = getYbar();
+		if(x > xbar){
+			int temp = x;
+			x = xbar;
+			xbar = temp;
+		}
+		if(y > ybar){
+			int temp = y;
+			y = ybar;
+			ybar = temp;
+		}
+		int width = xbar - x;
+		int height = ybar - y;
+		g.fillRect(x, y, width, height);
 	}
 	
 	public void printSelf() {
