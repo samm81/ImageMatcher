@@ -9,11 +9,13 @@ import javax.imageio.ImageIO;
 
 public class Runner {
 
+	static final int size = 256;
+	
 	static int numRectangles = 32;
 	static int numGenes = 5;
 
 	public static void main(String args[]) throws InterruptedException, IOException{
-		BufferedImage pic = ImageIO.read(new File("chrome.png"));
+		BufferedImage pic = ImageIO.read(new File("apple.png"));
 		int width = pic.getWidth();
 		int height = pic.getHeight();
 		Display f = new Display(width, height);
@@ -26,7 +28,7 @@ public class Runner {
 		for(int i=0;i<numGenes;i++){
 			displays[i] = new Display(width, height);
 
-			Image image = new Image(width, height, numRectangles);
+			Image image = new Image(numRectangles);
 			BufferedImage img = image.getBufferedImage();
 			long score = scorer.score(img);
 
@@ -74,8 +76,8 @@ public class Runner {
 			
 			//System.out.println(scoredImages);
 			
-			Image child1 = new Image(width, height, numRectangles, breeder.breed(rand1.getBinary(), rand2.getBinary()));
-			Image child2 = new Image(width, height, numRectangles, breeder.breed(rand2.getBinary(), rand1.getBinary()));
+			Image child1 = new Image(breeder.breed(rand1.getBinary(), rand2.getBinary()));
+			Image child2 = new Image(breeder.breed(rand2.getBinary(), rand1.getBinary()));
 
 			//System.out.println(child1);
 			//System.out.println(child2);
@@ -100,7 +102,7 @@ public class Runner {
 			
 			scoredImages.remove(mutateeKey);
 			
-			mutatee = new Image(width, height, numRectangles, breeder.mutate(mutatee.getBinary()));
+			mutatee = new Image(breeder.mutate(mutatee.getBinary()));
 			long mutateeScore = scorer.score(mutatee.getBufferedImage());
 			while(scoredImages.containsKey(mutateeScore))
 				mutateeScore++;

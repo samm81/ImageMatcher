@@ -5,7 +5,7 @@ import java.math.BigInteger;
 public class Rectangle {
 	private byte x, y, xbar, ybar, a, r, g, b;
 
-	public static final int binaryLength = 8*8;
+	public static final int bitCount = 8*8;
 
 	public Rectangle(int x, int y, int xbar, int ybar, Color color) {
 		this.x = (byte) x;
