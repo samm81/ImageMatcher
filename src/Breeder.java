@@ -11,7 +11,6 @@ public class Breeder {
 	
 	public BigInteger breed(BigInteger parent1, BigInteger parent2) {
 		int bitLength = parent1.bitCount();
-		
 		int splitPoint = r.nextInt(bitLength);
 		
 		parent1 = parent1.shiftRight(splitPoint).shiftLeft(splitPoint);
@@ -22,13 +21,7 @@ public class Breeder {
 	}
 	
 	public BigInteger mutate(BigInteger gene){
-		int bitLength = gene.bitCount();
-		
-		int flipPoint = r.nextInt(bitLength);
-		
-		BigInteger mask = BigInteger.valueOf(1).shiftLeft(flipPoint);
-		
-		return gene.xor(mask);
+		return gene.flipBit(r.nextInt(gene.bitCount()));
 	}
 	
 }
