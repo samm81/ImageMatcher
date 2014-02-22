@@ -17,15 +17,6 @@ public class Image {
 
 	public Image(int numRectangles) {
 		this(generateRandomBinary(numRectangles * Rectangle.bitCount));
-		/*
-		rectangles = new Rectangle[numRectangles];
-		for (int i = 0; i < numRectangles; i++) {
-			rectangles[i] = generateRandomRectangle();
-		}
-		bufferedImage = new BufferedImage(size, size,
-				BufferedImage.TYPE_INT_ARGB);
-		generateImage();
-		*/
 	}
 	
 	private static BigInteger generateRandomBinary(int numBits) {
@@ -67,17 +58,6 @@ public class Image {
 		for (Rectangle rectangle : rectangles) {
 			rectangle.drawSelf(g);
 		}
-	}
-
-	private Rectangle generateRandomRectangle() {
-		Random r = new Random();
-		int x = r.nextInt(this.size);
-		int y = r.nextInt(this.size);
-		int xbar = r.nextInt(this.size);
-		int ybar = r.nextInt(this.size);
-		Color color = new Color(r.nextFloat(), r.nextFloat(), r.nextFloat(),
-				r.nextFloat());
-		return new Rectangle(x, y, xbar, ybar, color);
 	}
 
 	public Rectangle[] getRectangles() {
