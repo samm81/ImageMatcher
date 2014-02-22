@@ -3,9 +3,12 @@ import java.awt.Graphics;
 import java.math.BigInteger;
 
 public class Rectangle {
+
 	private byte x, y, xbar, ybar, a, r, g, b;
 
-	public static final int bitCount = 8*8;
+	private static final int varBitCount = 8;
+
+	public static final int bitCount = 8 * varBitCount;
 
 	public Rectangle(int x, int y, int xbar, int ybar, Color color) {
 		this.x = (byte) x;
@@ -14,91 +17,96 @@ public class Rectangle {
 		this.ybar = (byte) ybar;
 		this.a = (byte) color.getAlpha();
 		this.r = (byte) color.getRed();
-		this.g = (byte)	color.getGreen();
+		this.g = (byte) color.getGreen();
 		this.b = (byte) color.getBlue();
 	}
 
 	public Rectangle(BigInteger binary) {
-		this.b = binary.and(BigInteger.valueOf(0xFF)).byteValue();
-		binary = binary.shiftRight(8);
-		this.g = binary.and(BigInteger.valueOf(0xFF)).byteValue();
-		binary = binary.shiftRight(8);
-		this.r = binary.and(BigInteger.valueOf(0xFF)).byteValue();
-		binary = binary.shiftRight(8);
-		this.a = binary.and(BigInteger.valueOf(0xFF)).byteValue();
-		binary = binary.shiftRight(8);
+		BigInteger ones = BigInteger.valueOf(0xFF);
+		this.b = binary.and(ones).byteValue();
+		binary = binary.shiftRight(varBitCount);
+		this.g = binary.and(ones).byteValue();
+		binary = binary.shiftRight(varBitCount);
+		this.r = binary.and(ones).byteValue();
+		binary = binary.shiftRight(varBitCount);
+		this.a = binary.and(ones).byteValue();
+		binary = binary.shiftRight(varBitCount);
 
-		this.ybar = binary.and(BigInteger.valueOf(0xFF)).byteValue();
-		binary = binary.shiftRight(8);
-		this.xbar = binary.and(BigInteger.valueOf(0xFF)).byteValue();
-		binary = binary.shiftRight(8);
-		this.y = binary.and(BigInteger.valueOf(0xFF)).byteValue();
-		binary = binary.shiftRight(8);
-		this.x = binary.and(BigInteger.valueOf(0xFF)).byteValue();
+		this.ybar = binary.and(ones).byteValue();
+		binary = binary.shiftRight(varBitCount);
+		this.xbar = binary.and(ones).byteValue();
+		binary = binary.shiftRight(varBitCount);
+		this.y = binary.and(ones).byteValue();
+		binary = binary.shiftRight(varBitCount);
+		this.x = binary.and(ones).byteValue();
 	}
 
 	public int getX() {
-		return x & 0xFF;
+		return toInt(x);
 	}
 
 	public int getY() {
-		return y & 0xFF;
+		return toInt(y);
 	}
 
 	public int getXbar() {
-		return xbar & 0xFF;
+		return toInt(xbar);
 	}
 
 	public int getYbar() {
-		return ybar & 0xFF;
+		return toInt(ybar);
 	}
 
 	public Color getColor() {
-		return new Color(r & 0xFF, g & 0xFF, b & 0xFF, a & 0xFF);
+		return new Color(toInt(r), toInt(g), toInt(b), toInt(a));
 	}
 
 	public BigInteger getBinary() {
 		BigInteger binary = BigInteger.ZERO;
 
-		binary = binary.shiftLeft(8);
-		binary = binary.or(BigInteger.valueOf(x & 0xFF));
+		binary = binary.shiftLeft(varBitCount);
+		binary = binary.or(BigInteger.valueOf(toInt(x)));
 
-		binary = binary.shiftLeft(8);
-		binary = binary.or(BigInteger.valueOf(y & 0xFF));
+		binary = binary.shiftLeft(varBitCount);
+		binary = binary.or(BigInteger.valueOf(toInt(y)));
 
-		binary = binary.shiftLeft(8);
-		binary = binary.or(BigInteger.valueOf(xbar & 0xFF));
+		binary = binary.shiftLeft(varBitCount);
+		binary = binary.or(BigInteger.valueOf(toInt(xbar)));
 
-		binary = binary.shiftLeft(8);
-		binary = binary.or(BigInteger.valueOf(ybar & 0xFF));
+		binary = binary.shiftLeft(varBitCount);
+		binary = binary.or(BigInteger.valueOf(toInt(ybar)));
 
-		binary = binary.shiftLeft(8);
-		binary = binary.or(BigInteger.valueOf(a & 0xFF));
+		binary = binary.shiftLeft(varBitCount);
+		binary = binary.or(BigInteger.valueOf(toInt(a)));
 
-		binary = binary.shiftLeft(8);
-		binary = binary.or(BigInteger.valueOf(r & 0xFF));
+		binary = binary.shiftLeft(varBitCount);
+		binary = binary.or(BigInteger.valueOf(toInt(r)));
 
-		binary = binary.shiftLeft(8);
-		binary = binary.or(BigInteger.valueOf(g & 0xFF));
+		binary = binary.shiftLeft(varBitCount);
+		binary = binary.or(BigInteger.valueOf(toInt(g)));
 
-		binary = binary.shiftLeft(8);
-		binary = binary.or(BigInteger.valueOf(b & 0xFF));
+		binary = binary.shiftLeft(varBitCount);
+		binary = binary.or(BigInteger.valueOf(toInt(b)));
 
 		return binary;
 	}
-	
+
+	private int toInt(byte num) {
+		return num & 0xFF;
+	}
+
 	public void drawSelf(Graphics g) {
 		g.setColor(getColor());
 		int x = getX();
 		int y = getY();
 		int xbar = getXbar();
 		int ybar = getYbar();
-		if(x > xbar){
+		if (x > xbar) {
 			int temp = x;
 			x = xbar;
 			xbar = temp;
 		}
-		if(y > ybar){
+		if (y > ybar) {
 			int temp = y;
 			y = ybar;
 			ybar = temp;
@@ -107,7 +115,7 @@ public class Rectangle {
 		int height = ybar - y;
 		g.fillRect(x, y, width, height);
 	}
-	
+
 	public void printSelf() {
 		System.out.print("x: " + getX() + ", ");
 		System.out.print("y: " + getY() + ", ");
@@ -120,15 +128,16 @@ public class Rectangle {
 		System.out.print("b: " + getColor().getBlue());
 		System.out.println();
 	}
-	
+
 	// for testing
 	public static void main(String[] args) {
-		Rectangle one = new Rectangle(50, 60, 70, 80, new Color(90, 100, 110, 120));
+		Rectangle one = new Rectangle(50, 60, 70, 80, new Color(90, 100, 110,
+				120));
 		BigInteger binary = one.getBinary();
 		Rectangle two = new Rectangle(binary);
 		one.printSelf();
 		System.out.println();
 		two.printSelf();
 	}
-	
+
 }
