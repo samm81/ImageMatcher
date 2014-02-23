@@ -132,7 +132,7 @@ public class Runner {
 		}
 
 	}
-
+	
 	private static void drawScore(Graphics g, int iteration, long bestScore) {
 		g.setColor(Color.WHITE);
 		g.fillRect(0, 0, size, size);
@@ -145,13 +145,18 @@ public class Runner {
 		g.setColor(Color.BLUE);
 		g.drawString(""+iteration, 30, 90);
 		
-		g.setFont(new Font("Times New Roman", Font.BOLD, 30));
+		g.setFont(new Font("Times New Roman", Font.PLAIN, 30));
 		g.setColor(Color.BLACK);
 		g.drawString("Best score: ", 15, 135);
 		
 		g.setFont(new Font("Times New Roman", Font.BOLD, 50));
 		g.setColor(Color.RED);
 		g.drawString(""+bestScore, 30, 195);
+		
+		g.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+		g.setColor(Color.BLACK);
+		g.drawString("click on an image to save it", 10, 225);
+		g.drawString("as image.png (will overwrite)", 10, 245);
 		
 	}
 
