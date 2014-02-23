@@ -13,6 +13,8 @@ public class Display extends JFrame {
 
 	static int displayNum = -1;
 
+	int fps = 10;
+	
 	DisplayCanvas displayCanvas;
 
 	public Display(int width, int height) {
@@ -31,7 +33,7 @@ public class Display extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setAlwaysOnTop(false);
 
-		displayCanvas = new DisplayCanvas(30);
+		displayCanvas = new DisplayCanvas(fps);
 		displayCanvas.setSize(width, height);
 		add(displayCanvas);
 
