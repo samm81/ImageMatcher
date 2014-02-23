@@ -1,6 +1,8 @@
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.util.Map.Entry;
 import java.util.Random;
 import java.util.TreeMap;
@@ -13,12 +15,20 @@ public class Runner {
 	
 	static int numRectangles = 32;
 	static int numGenes = 5;
+	
+	static String filename = "apple.png";
 
-	public static void main(String args[]) throws InterruptedException, IOException{
-		BufferedImage pic = ImageIO.read(new File("apple.png"));
+	public static void main(String args[]) throws Exception{
+		
+		BufferedImage pic = ImageIO.read(new File(filename));
 		int width = pic.getWidth();
 		int height = pic.getHeight();
-		Display f = new Display(width, height);
+		
+		if(width != 256 || height != 256){
+			throw new Exception("Image height and width must be exactly 256 pixels");
+		}
+		
+		Display f = new Display(size,size);
 		f.updateImage(pic);
 
 		Scorer scorer = new Scorer(pic);
@@ -26,7 +36,7 @@ public class Runner {
 		Display[] displays = new Display[numRectangles];
 		TreeMap<Long, Image> scoredImages = new TreeMap<Long, Image>();
 		for(int i=0;i<numGenes;i++){
-			displays[i] = new Display(width, height);
+			displays[i] = new Display(size, size);
 
 			Image image = new Image(numRectangles);
 			BufferedImage img = image.getBufferedImage();
@@ -37,8 +47,14 @@ public class Runner {
 
 		Breeder breeder = new Breeder();
 		
+		Display scoreFrame = new Display(size, size);
+		BufferedImage scoreImg = new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
+		Graphics scoreGraphics = scoreImg.getGraphics();
+		
 		int iteration = 0;
 		while(true){
+			drawScore(scoreGraphics, iteration, scoredImages.firstKey());
+			scoreFrame.updateImage(scoreImg);
 			System.out.println("Iteration: " + iteration + "\tBest Score: " + scoredImages.firstKey());
 			
 			int i = 0;
@@ -116,6 +132,28 @@ public class Runner {
 			iteration++;
 		}
 
+	}
+
+	private static void drawScore(Graphics g, int iteration, long bestScore) {
+		g.setColor(Color.WHITE);
+		g.fillRect(0, 0, size, size);
+		
+		g.setColor(Color.BLACK);
+		g.setFont(new Font("Times New Roman", Font.PLAIN, 30));
+		g.drawString("Iteration: ", 15, 30);
+		
+		g.setFont(new Font("Times New Roman", Font.BOLD, 50));
+		g.setColor(Color.BLUE);
+		g.drawString(""+iteration, 30, 90);
+		
+		g.setFont(new Font("Times New Roman", Font.BOLD, 30));
+		g.setColor(Color.BLACK);
+		g.drawString("Best score: ", 15, 135);
+		
+		g.setFont(new Font("Times New Roman", Font.BOLD, 50));
+		g.setColor(Color.RED);
+		g.drawString(""+bestScore, 30, 195);
+		
 	}
 
 }

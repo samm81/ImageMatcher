@@ -10,7 +10,6 @@ public class Image {
 	final int size = 256;
 
 	Rectangle[] rectangles;
-
 	BufferedImage bufferedImage;
 
 	Color backgroundColor = Color.WHITE;
