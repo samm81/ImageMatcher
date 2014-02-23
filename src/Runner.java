@@ -20,18 +20,12 @@ public class Runner {
 
 	public static void main(String args[]) throws Exception{
 		
-		BufferedImage pic = ImageIO.read(new File(filename));
-		int width = pic.getWidth();
-		int height = pic.getHeight();
+		BufferedImage basePicture = readPicture();
 		
-		if(width != 256 || height != 256){
-			throw new Exception("Image height and width must be exactly 256 pixels");
-		}
-		
-		Display f = new Display(size,size);
-		f.updateImage(pic);
+		Display basePictureFrame = new Display(size,size);
+		basePictureFrame.updateImage(basePicture);
 
-		Scorer scorer = new Scorer(pic);
+		Scorer scorer = new Scorer(basePicture);
 
 		Display[] displays = new Display[numRectangles];
 		TreeMap<Long, Image> scoredImages = new TreeMap<Long, Image>();
@@ -41,7 +35,6 @@ public class Runner {
 			Image image = new Image(numRectangles);
 			BufferedImage img = image.getBufferedImage();
 			long score = scorer.score(img);
-
 			scoredImages.put(score, image);
 		}
 
@@ -133,6 +126,14 @@ public class Runner {
 
 	}
 	
+	private static BufferedImage readPicture() throws Exception {
+		BufferedImage pic = ImageIO.read(new File(filename));
+		if(pic.getWidth() != 256 || pic.getHeight() != 256){
+			throw new Exception("Image height and width must be exactly 256 pixels");
+		}
+		return pic;
+	}
+
 	private static void drawScore(Graphics g, int iteration, long bestScore) {
 		g.setColor(Color.WHITE);
 		g.fillRect(0, 0, size, size);
