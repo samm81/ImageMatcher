@@ -51,8 +51,8 @@ abstract class DoubleBufferedCanvas extends Canvas implements Runnable{
 		
 		Graphics g2nd = second.getGraphics();
 		g2nd.clearRect(0, 0, second.getWidth(null), second.getHeight(null));
-		fpsCounter.paintSelf(g2nd, this.getWidth() - 20, 10);
 		draw(g2nd);
+		fpsCounter.paintSelf(g2nd, this.getWidth() - 37, 27);
 		g.drawImage(second, 0, 0, null);
 	}
 

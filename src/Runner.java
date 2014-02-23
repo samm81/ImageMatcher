@@ -55,7 +55,6 @@ public class Runner {
 		while(true){
 			drawScore(scoreGraphics, iteration, scoredImages.firstKey());
 			scoreFrame.updateImage(scoreImg);
-			System.out.println("Iteration: " + iteration + "\tBest Score: " + scoredImages.firstKey());
 			
 			int i = 0;
 			for(Image image : scoredImages.values()){
