@@ -30,6 +30,8 @@ public class ImageMatcher implements Runnable {
 	
 	int iteration;
 	
+	//asdfghjkl
+	
 	public ImageMatcher(String filename, int numRectangles, int numGenes) throws Exception{
 		basePicture = readPicture(filename);
 		
